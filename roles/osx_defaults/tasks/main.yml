@@ -1,0 +1,70 @@
+---
+- name: Safariのデバッグメニューを有効化
+  osx_defaults:
+    domain: com.apple.Safari
+    key: IncludeInternalDebugMenu
+    type: bool
+    value: true
+    state: present
+  notify: Restart Safari
+
+- name: Finderで隠しファイルを表示
+  osx_defaults:
+    domain: com.apple.finder
+    key: AppleShowAllFiles
+    type: bool
+    value: true
+    state: present
+  notify: Restart Finder
+
+- name: Finderで拡張子を表示
+  osx_defaults:
+    domain: com.apple.finder
+    key: AppleShowAllExtensions
+    type: bool
+    value: true
+  notify: Restart Finder
+
+- name: FinderでPathBarを表示
+  osx_defaults:
+    domain: com.apple.finder
+    key: ShowPathbar
+    type: bool
+    value: true
+  notify: Restart Finder
+
+- name: Finderでステータスバーを表示
+  osx_defaults:
+    domain: com.apple.finder
+    key: ShowStatusBar
+    type: bool
+    value: true
+  notify: Restart Finder
+
+- name: Dockを自動的に隠す
+  osx_defaults:
+    domain: com.apple.dock
+    key: autohide
+    type: int
+    value: 1
+    state: present
+  notify: Restart Dock
+
+# 以下は動かなかったのでコメントアウトしておく
+# - name: 画面左下にカーソル移動でスクリーンセーバー起動
+#   osx_defaults:
+#     domain: com.apple.dock
+#     key: wvous-bl-corner
+#     type: int
+#     value: 5
+#     state: present
+#   notify: Restart Dock
+
+# - name: 画面左下にカーソル移動でスクリーンセーバー起動
+#   osx_defaults:
+#     domain: com.apple.dock
+#     key: wvous-bl-modifier
+#     type: int
+#     value: 0
+#     state: present
+#   notify: Restart Dock

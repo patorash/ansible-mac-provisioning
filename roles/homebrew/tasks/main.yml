@@ -1,0 +1,39 @@
+---
+- name: homebrewのアップデート
+  homebrew:
+    update_homebrew=yes
+
+- name: brewパッケージのインストール
+  homebrew:
+    name="{{ item.name }}"
+    state="{{ item.state | default('latest') }}"
+    install_options="{{
+      item.install_options | default() | join(',')
+      if item.install_options is not string
+      else item.install_options }}"
+  with_items:
+    - { name: ghq }
+    - { name: git }
+    - { name: heroku }
+    - { name: imagemagick@6 }
+    - { name: libxml2}
+    - { name: openssl }
+    - { name: peco }
+    - { name: phantomjs }
+    - { name: postgresql }
+    - { name: readline }
+    - { name: wget }
+    - { name: yarn }
+
+- name: brewパッケージのリンクの貼り替え
+  homebrew:
+    name="{{ item.name }}"
+    state="{{ item.state | default('latest') }}"
+    install_options="{{
+      item.install_options | default() | join(',')
+      if item.install_options is not string
+      else item.install_options }}"
+  with_items:
+    - { name: imagemagick@6, state: linked, install_options: force}
+    - { name: openssl, state: linked, install_options: force}
+  changed_when: False

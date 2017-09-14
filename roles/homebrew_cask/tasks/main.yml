@@ -1,0 +1,21 @@
+---
+- name: caskパッケージのインストール
+  homebrew_cask:
+    name="{{ item.name }}"
+    state="{{ item.state | default('installed')}}"
+  with_items:
+    - { name: atom }
+    - { name: docker }
+    - { name: docker-toolbox }
+    - { name: firefox-esr }
+    - { name: iterm2 }
+    - { name: google-chrome }
+    - { name: java }
+    - { name: kitematic }
+    - { name: microsoft-office }
+    - { name: rubymine }
+    - { name: skitch }
+    - { name: thunderbird }
+    - { name: vagrant }
+    - { name: virtualbox}
+    - { name: visual-studio-code }

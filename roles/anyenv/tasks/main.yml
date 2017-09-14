@@ -1,0 +1,58 @@
+---
+- name: anyenvをcloneする
+  git:
+    repo: 'https://github.com/riywo/anyenv.git'
+    dest: ~/.anyenv
+
+- name: anyenvにパスが通っているかチェックする
+  shell: command -v anyenv >/dev/null 2>&1
+  register: is_anyenv_exist
+  ignore_errors: yes
+  changed_when: False
+
+- name: anyenvへのPATHを通す
+  shell: |
+    echo 'export PATH="$HOME/.anyenv/bin:$PATH"' >> ~/.bash_profile
+    source ~/.bash_profile
+    echo 'eval "$(anyenv init -)"' >> ~/.bash_profile
+    exec $SHELL -l
+  when: is_anyenv_exist.rc != 0
+
+- name: rbenvにパスが通っているかをチェックする
+  shell: command -v rbenv >/dev/null 2>&1
+  register: is_rbenv_exist
+  ignore_errors: yes
+  changed_when: False
+
+- name: rbenvのインストール
+  shell: /bin/bash -lc "anyenv install rbenv"
+  when: is_rbenv_exist.rc != 0
+
+- name: ndenvにパスが通っているかをチェックする
+  shell: command -v ndenv >/dev/null 2>&1
+  register: is_ndenv_exist
+  ignore_errors: yes
+  changed_when: False
+
+- name: ndenvのインストール
+  shell: /bin/bash -lc "anyenv install ndenv"
+  when: is_ndenv_exist.rc != 0
+
+- name: Rubyのインストール
+  shell: |
+    rbenv install {{ version }} --skip-existing
+    rbenv rehash
+  with_items: "{{ ruby_versions }}"
+  loop_control:
+    loop_var: version
+  changed_when: False
+
+- name: Nodeのインストール
+  shell: |
+    ndenv install {{ version }} --skip-existing
+    ndenv rehash
+  with_items: "{{ node_versions }}"
+  loop_control:
+    loop_var: version
+  changed_when: False
+
