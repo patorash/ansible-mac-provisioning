@@ -1,0 +1,45 @@
+---
+- name: homebrewのアップデート
+  homebrew:
+    update_homebrew=yes
+
+- name: fishのインストール
+  homebrew:
+    name: fish
+    state: latest
+
+- name: fishを選択可能なshellとして追加
+  lineinfile:
+    dest: /etc/shells
+    line: /usr/local/bin/fish
+  become: yes
+
+- name: 既存のshellを確認する
+  shell: echo $SHELL
+  register: current_shell
+  changed_when: false
+
+- name: fishをデフォルトのshellにする
+  shell: chsh -s /usr/local/bin/fish
+  become: yes
+  when: current_shell.stdout != '/usr/local/bin/fish'
+
+- name: oh-my-fishをclone
+  git:
+    repo: https://github.com/oh-my-fish/oh-my-fish
+    dest: ~/oh-my-fish
+
+- name: oh-my-fishをlocalからインストールする
+  shell: bin/install --offline --noninteractive
+  args:
+    chdir: ~/oh-my-fish
+    creates: ~/.config/omf
+
+- stat: path=~/.anyenv
+  register: anyenv
+
+- name: anyenvの設定を行うfishファイルをコピーする
+  get_url:
+    url: https://gist.githubusercontent.com/patorash/b5a1033c08d2c4df103457866b2dcaa2/raw/03f1aa6314a9137f838deaba62e06b7f2f1af1dd/config.fish
+    dest: ~/.config/fish/conf.d/anyenv.fish
+  when: anyenv.stat.exists
