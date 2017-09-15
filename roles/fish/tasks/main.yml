@@ -48,3 +48,19 @@
   get_url:
     url: https://gist.githubusercontent.com/patorash/1de94fcb7efeb847501d2fb7900c2deb/raw/7251e11091b388dd527e03c172913e188d1432f6/peco.fish
     dest: ~/.config/fish/conf.d/peco.fish
+
+- name: aliasがまとめられたfishファイルをコピーする
+  get_url:
+    url: https://gist.githubusercontent.com/patorash/ca18e28b22f12a55e2539477abcda26d/raw/1ecc260dad5779be94a4304f2980a114ea85e7ac/alias.fish
+    dest: ~/.config/fish/conf.d/alias.fish
+
+- name: functionsディレクトリを作る
+  file:
+    path: ~/.config/fish/functions
+    state: directory
+
+- name: カスタムキーバインディングのfishファイルをコピーする
+  get_url:
+    url: https://gist.githubusercontent.com/patorash/47e7e179fdd80fe7e9517b93cb2f3d82/raw/8f74b8614eb0ddc3f3f3ce0c1964117cdbb08fdf/fish_user_key_bindings.fish
+    dest: ~/.config/fish/functions/fish_user_key_bindings.fish
+    force: true
