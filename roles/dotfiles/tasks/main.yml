@@ -1,0 +1,15 @@
+---
+- name: dotfilesをgit cloneする
+  git:
+    repo: https://github.com/patorash/dotfiles.git
+    dest: ~/dotfiles
+
+- name: シンボリックリンクの作成
+  file:
+    src: ~/dotfiles/{{ item }}
+    dest: ~/{{ item }}
+    state: link
+    force: true
+  with_items:
+    - .gitconfig
+    - .global_gitignore
