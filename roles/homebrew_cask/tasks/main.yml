@@ -19,3 +19,5 @@
     - { name: vagrant }
     - { name: virtualbox}
     - { name: visual-studio-code }
+  become: yes
+  failed_when: False

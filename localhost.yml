@@ -9,6 +9,8 @@
     - homebrew
     - homebrew_cask
     - anyenv
+    - rbenv
+    - ndenv
     - osx_defaults
     - fish
     - dotfiles
