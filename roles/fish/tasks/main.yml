@@ -43,3 +43,8 @@
     url: https://gist.githubusercontent.com/patorash/b5a1033c08d2c4df103457866b2dcaa2/raw/9a6c7e2111d95db0fdb07d43a41fa2eea5352b5f/anyenv.fish
     dest: ~/.config/fish/conf.d/anyenv.fish
   when: anyenv.stat.exists
+
+- name: pecoの便利関数のfishファイルをコピーする
+  get_url:
+    url: https://gist.githubusercontent.com/patorash/1de94fcb7efeb847501d2fb7900c2deb/raw/7251e11091b388dd527e03c172913e188d1432f6/peco.fish
+    dest: ~/.config/fish/conf.d/peco.fish
