@@ -24,16 +24,30 @@
   become: yes
   when: current_shell.stdout != '/usr/local/bin/fish'
 
-- name: oh-my-fishをclone
-  git:
-    repo: https://github.com/oh-my-fish/oh-my-fish
-    dest: ~/oh-my-fish
+- name: functionsディレクトリを作る
+  file:
+    path: ~/.config/fish/functions
+    state: directory
 
-- name: oh-my-fishをlocalからインストールする
-  shell: bin/install --offline --noninteractive
+- name: fishermanのインストール
+  get_url:
+    url: https://git.io/fisher
+    dest: ~/.config/fish/functions/fisher.fish
+
+- name: fisherman経由でgit_utilプラグインをインストール
+  shell: fish -lc "fisher git_util"
   args:
-    chdir: ~/oh-my-fish
-    creates: ~/.config/omf
+    creates: ~/.config/fisherman/git_util
+
+- name: fisherman経由でomfのdefaultテーマをインストール
+  shell: fish -lc "fisher omf/theme-default"
+  args:
+    creates: ~/.config/fisherman/default
+
+- name: fisherman経由でgistで定義したカスタムキーバインドをインストール
+  shell: fish -lc "fisher https://gist.github.com/patorash/47e7e179fdd80fe7e9517b93cb2f3d82"
+  args:
+    creates: ~/.config/fisherman/fish_user_key_bindings
 
 - stat: path=~/.anyenv
   register: anyenv
@@ -53,14 +67,3 @@
   get_url:
     url: https://gist.githubusercontent.com/patorash/ca18e28b22f12a55e2539477abcda26d/raw/1ecc260dad5779be94a4304f2980a114ea85e7ac/alias.fish
     dest: ~/.config/fish/conf.d/alias.fish
-
-- name: functionsディレクトリを作る
-  file:
-    path: ~/.config/fish/functions
-    state: directory
-
-- name: カスタムキーバインディングのfishファイルをコピーする
-  get_url:
-    url: https://gist.githubusercontent.com/patorash/47e7e179fdd80fe7e9517b93cb2f3d82/raw/8f74b8614eb0ddc3f3f3ce0c1964117cdbb08fdf/fish_user_key_bindings.fish
-    dest: ~/.config/fish/functions/fish_user_key_bindings.fish
-    force: true
