@@ -5,7 +5,7 @@
     creates: ~/.anyenv/envs/rbenv/bin/rbenv
 
 - name: Rubyのインストール
-  shell: rbenv install {{ version }}
+  shell: env MAKE_OPTS="-j 4" rbenv install {{ version }}
   args:
     creates: ~/.anyenv/envs/rbenv/versions/{{ version }}
   with_items: "{{ ruby_versions }}"
