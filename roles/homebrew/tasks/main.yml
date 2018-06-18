@@ -19,7 +19,6 @@
     - { name: libxml2}
     - { name: openssl }
     - { name: peco }
-    - { name: phantomjs }
     - { name: postgresql }
     - { name: readline }
     - { name: wget }
