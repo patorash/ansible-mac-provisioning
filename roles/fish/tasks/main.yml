@@ -39,6 +39,11 @@
   args:
     creates: ~/.config/fisherman/git_util
 
+- name: fisherman経由でfish-ssh-agentをインストール
+  shell: fish -lc "fisher install tuvistavie/fish-ssh-agent"
+  args:
+    creates: ~/.config/fisherman/ssh-agent
+
 - name: fisherman経由でomfのdefaultテーマをインストール
   shell: fish -lc "fisher omf/theme-default"
   args:
