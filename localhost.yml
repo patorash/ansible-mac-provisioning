@@ -3,10 +3,10 @@
   connection: local
   gather_facts: no
   roles:
-    # - homebrew_tap
-    # - homebrew
-    - homebrew_cask
-    # - anyenv
-    # - osx_defaults
-    # - fish
-    # - dotfiles
+    - homebrew_tap
+    - homebrew
+    # - homebrew_cask
+    - anyenv
+    - osx_defaults
+    - fish
+    - dotfiles
