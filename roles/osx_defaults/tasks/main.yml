@@ -1,13 +1,4 @@
 ---
-- name: Safariのデバッグメニューを有効化
-  osx_defaults:
-    domain: com.apple.Safari
-    key: IncludeInternalDebugMenu
-    type: bool
-    value: true
-    state: present
-  notify: Restart Safari
-
 - name: Finderで隠しファイルを表示
   osx_defaults:
     domain: com.apple.finder

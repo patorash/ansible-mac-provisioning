@@ -1,4 +1,18 @@
 ---
+- name: .bashrcの作成
+  file:
+    path: ~/.bashrc
+    state: touch
+
+- name: .bash_profileを作成・追記
+  blockinfile:
+    dest: ~/.bash_profile
+    create: true
+    block: |
+      if [ -f ~/.bashrc ] ; then
+        . ~/.bashrc
+      fi
+
 - name: anyenvをcloneする
   git:
     repo: 'https://github.com/riywo/anyenv.git'
@@ -11,3 +25,19 @@
   with_items:
     - export PATH="$HOME/.anyenv/bin:$PATH"
     - eval "$(anyenv init -)"
+
+- name: anyenvの初期設定を行う
+  shell: bash -lc "anyenv install --init"
+  args:
+    creates: ~/.config/anyenv/anyenv-install
+
+- name: env系のインストール
+  shell: bash -lc "anyenv install {{ language }}"
+  args:
+    creates: ~/.anyenv/envs/{{ language }}
+  with_items:
+    - rbenv
+    - nodenv
+    - goenv
+  loop_control:
+    loop_var: language
